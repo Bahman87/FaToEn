@@ -1,32 +1,35 @@
-import java.awt.datatransfer.StringSelection;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.Character.UnicodeBlock;
-
-import com.sun.xml.internal.fastinfoset.util.ValueArray;
+import java.io.PrintStream;
+import java.util.Arrays;
 
 public class ConvertFarsiToEnglish {
-	static String text;
 
 	public static void main(String[] args) {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-			text = reader.readLine();
-			PrintWriter writer = new PrintWriter("the-file-name66.txt", "UTF-8");
-			char[] txt = text.toCharArray();
-			int[] val = new int[txt.length - 1];
-			for (int i = 0; i < txt.length; i++) {
-				val[i] = (int) txt[i];
-				// writer.println(val[i]);
-				System.out.println(val[i]);
+
+			File file = new File("out.txt"); // Your file
+			FileOutputStream fos = new FileOutputStream(file);
+			PrintStream ps = new PrintStream(fos);
+			System.setOut(ps);
+
+			String str = "آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی";
+			char[] c = str.toCharArray();
+			int[] val = new int[c.length];
+			int i = 0;
+			for (char cc : c) {
+				val[i] = (int) cc;
+				i++;
 			}
+			for (char cc : c) {
+				System.out.print(cc + "   ");
+			}
+			System.out.println("");
+			for (int num : val)
+				System.out.print(num + " ");
 
-			// writer.print(UnicodeBlock.ARABIC_PRESENTATION_FORMS_A);
-			writer.close();
 		} catch (Exception e) {
-
+			System.out.println(e.getMessage());
 		}
 	}
 }
