@@ -1,20 +1,45 @@
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcel {
+	private File src = null;
+	private FileInputStream fis;
+	private XSSFWorkbook wb;
+	private XSSFSheet sheet;
 
-	public static void main(String[] args) throws Exception{
-		// TODO Auto-generated method stub
-		File src= new File("C:\\Users\\bahma\\ExcelData\\TestData.xlsx");
-		FileInputStream fis = new FileInputStream(src);
-		XSSFWorkbook wb =new XSSFWorkbook(fis);
-		XSSFSheet sheet = wb.getSheetAt(0);
-		String data0 = sheet.getRow(0).getCell(0).getStringCellValue();
-		System.out.println(data0);
-		wb.close();
+	public ReadExcel(int exlSheet, String path) {
+
+		src = new File(path);
+		try {
+			fis = new FileInputStream(src);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			wb = new XSSFWorkbook(fis);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sheet = wb.getSheetAt(exlSheet);
+
+	}
+
+	public String getData(int row, int column) {
+		String data = sheet.getRow(row).getCell(column).getStringCellValue();
+		try {
+			wb.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
 	}
 
 }
